@@ -6,9 +6,21 @@ def listar(doc):
     return lista
 
 def contartipos(doc):
-    tipo=input("Indica el tipo del pokemon: ")
+    tipo=input("Indica el tipo del Pokemon: ")
     listatipo=doc.xpath("/pokedex/pokemon[type='%s']/name/text()"%(tipo))
     print(len(listatipo))
+
+def mostrartipo(doc):
+    pokemon=input("Indica de qué Pokemon quiere saber el tipo: ").upper()
+    print("El/los tipos de este Pokemon es/son: ")
+    listanombre=doc.xpath("/pokedex/pokemon[name='%s']/type/text()"%(pokemon))
+    return listanombre
+
+def mostraratkpokemon(doc):
+    ataque=input("Indica un ataque: ")
+    print("Los Pokemon que pueden aprender este ataque son: ")
+    listaataque=doc.xpath("/pokedex/pokemon/moves/move[name='%s']/../../name/text()"%(ataque))
+    return listaataque
 
 
 print("")
@@ -26,7 +38,14 @@ while True:
             print(i)
     elif opcion==2:
         contartipos(doc)
-        
+    elif opcion==3:
+        for i in mostrartipo(doc):
+            print(i," ",end="")
+        print("")
+    elif opcion==4:
+        for i in mostraratkpokemon(doc):
+            print(i," ",end="")
+        print("")
     elif opcion==0:
         print("Adios")
         break
